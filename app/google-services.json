@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "717466200173",
+    "project_id": "chater-chat-6992f",
+    "storage_bucket": "chater-chat-6992f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:717466200173:android:3a5c1ccfe28cdb70847764",
+        "android_client_info": {
+          "package_name": "com.example.chaterchat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "717466200173-ohkbsaifkab9jro8pgqlrf4r2ldb3f7u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCW-qwKHLxvtqbD68EcKTl9r2pkqIab-gM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "717466200173-ohkbsaifkab9jro8pgqlrf4r2ldb3f7u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
