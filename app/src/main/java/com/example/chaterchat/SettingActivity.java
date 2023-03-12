@@ -3,7 +3,6 @@ package com.example.chaterchat;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -11,9 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.chaterchat.Model.Users;
-
 import com.example.chaterchat.databinding.ActivitySettingBinding;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -21,7 +18,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
@@ -40,24 +36,19 @@ public class SettingActivity extends AppCompatActivity {
         auth= FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
 
-        binding.backArrow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(SettingActivity.this,MainActivity.class);
-                startActivity(intent);
-            }
+        binding.backArrow.setOnClickListener(view -> {
+            Intent intent = new Intent(SettingActivity.this,MainActivity.class);
+            startActivity(intent);
+            finish();
         });
-        binding.savebtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String status = binding.etStatus.getText().toString();
-                String username = binding.etUserName.getText().toString();
-                HashMap<String , Object> obj = new HashMap<>();
-                obj.put("userName",username);
-                obj.put("status",status);
-                database.getReference().child("Users").child(FirebaseAuth.getInstance().getUid()).updateChildren(obj);
-                Toast.makeText(SettingActivity.this, "Update Profile", Toast.LENGTH_SHORT).show();
-            }
+        binding.savebtn.setOnClickListener(view -> {
+            String status = binding.etStatus.getText().toString();
+            String username = binding.etUserName.getText().toString();
+            HashMap<String , Object> obj = new HashMap<>();
+            obj.put("userName",username);
+            obj.put("status",status);
+            database.getReference().child("Users").child(FirebaseAuth.getInstance().getUid()).updateChildren(obj);
+            Toast.makeText(SettingActivity.this, "Update Profile", Toast.LENGTH_SHORT).show();
         });
 
         database.getReference().child("Users").child(FirebaseAuth.getInstance().getUid())
@@ -67,7 +58,7 @@ public class SettingActivity extends AppCompatActivity {
                         Users users = snapshot.getValue(Users.class);
                         Picasso.get()
                                 .load(users.getProfile())
-                                .placeholder(R.drawable.user)
+                                .placeholder(R.drawable.man)
                                 .into(binding.profileImage);
                         binding.etStatus.setText(users.getStatus());
                         binding.etUserName.setText(users.getUserName());
@@ -79,14 +70,11 @@ public class SettingActivity extends AppCompatActivity {
                     }
                 });
 
-        binding.plusbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent();
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                intent.setType("image/*");
-                startActivityForResult(intent,33);
-            }
+        binding.plusbtn.setOnClickListener(view -> {
+            Intent intent = new Intent();
+            intent.setAction(Intent.ACTION_GET_CONTENT);
+            intent.setType("image/*");
+            startActivityForResult(intent,33);
         });
     }
 
@@ -97,17 +85,16 @@ public class SettingActivity extends AppCompatActivity {
                 Uri FileUri = data.getData();
                 binding.profileImage.setImageURI(FileUri);
                 final StorageReference reference = storage.getReference().child("profile_image").child(FirebaseAuth.getInstance().getUid());
-                reference.putFile(FileUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        reference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                            @Override
-                            public void onSuccess(Uri uri) {
-                                database.getReference().child("Users").child(FirebaseAuth.getInstance().getUid()).child("profile").setValue(uri.toString());
-                            }
-                        });
-                    }
-                });
+                reference.putFile(FileUri).addOnSuccessListener(taskSnapshot ->
+                        reference.getDownloadUrl().addOnSuccessListener(uri ->
+                                database.getReference().child("Users").child(FirebaseAuth.getInstance().getUid()).child("profile")
+                                        .setValue(uri.toString())));
             }
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(SettingActivity.this,MainActivity.class));
+        finish();
     }
 }

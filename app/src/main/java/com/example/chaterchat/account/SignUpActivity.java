@@ -29,10 +29,10 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivitySignUpBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        database =  FirebaseDatabase.getInstance();
 
         // variable instilaze
         auth = FirebaseAuth.getInstance();
-        database =  FirebaseDatabase.getInstance();
         progressDialog = new ProgressDialog(SignUpActivity.this);
         progressDialog.setTitle("creating account");
         progressDialog.setMessage("We're creating your Account ");

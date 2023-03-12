@@ -12,10 +12,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.chaterchat.ChartDetailActvity;
+import com.example.chaterchat.AES;
+import com.example.chaterchat.ChatDetailActivity;
 import com.example.chaterchat.Model.Users;
 import com.example.chaterchat.R;
-import com.example.chaterchat.SplashActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -24,6 +24,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder>{
     ArrayList<Users> list;
@@ -55,26 +56,25 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder>{
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if(snapshot.hasChildren()){
                             for(DataSnapshot snapshot1 : snapshot.getChildren()){
-                                holder.lastMessage.setText(snapshot1.child("message").getValue().toString());
+                                holder.lastMessage.setText(AES.decrypt(Objects.requireNonNull(snapshot1.child("message").getValue()).toString()));
                             }
                         }
+                        else {
+                            holder.lastMessage.setText("");
+                        }
                     }
-
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
 
                     }
                 });
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(context, ChartDetailActvity.class);
-                intent.putExtra("userId",users.getUserId());
-                intent.putExtra("profilePic",users.getProfile());
-                intent.putExtra("userName",users.getUserName());
-                context.startActivity(intent);
-            }
+        holder.itemView.setOnClickListener(view -> {
+            Intent intent = new Intent(context, ChatDetailActivity.class);
+            intent.putExtra("userId",users.getUserId());
+            intent.putExtra("profilePic",users.getProfile());
+            intent.putExtra("userName",users.getUserName());
+            context.startActivity(intent);
         });
 
     }
@@ -84,7 +84,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder>{
         return list.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public static class ViewHolder extends RecyclerView.ViewHolder{
         ImageView image;
         TextView userName,lastMessage;
         public ViewHolder(@NonNull View itemView) {

@@ -1,8 +1,15 @@
 package com.example.chaterchat.Model;
 
 public class MessageModel {
-    String message,uId,messageId;
+    String message,uId,messageId,type;
     Long timestamp;
+
+    public MessageModel(String uId, String message, String type, Long timestamp) {
+        this.message = message;
+        this.uId = uId;
+        this.type = type;
+        this.timestamp = timestamp;
+    }
 
     public MessageModel(String message, String uId, Long timestamp) {
         this.message = message;
@@ -15,6 +22,15 @@ public class MessageModel {
     }
     public MessageModel() {
     }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     public String getMessageId() {
         return messageId;
     }

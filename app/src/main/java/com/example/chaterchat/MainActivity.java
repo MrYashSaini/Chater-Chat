@@ -1,15 +1,16 @@
 package com.example.chaterchat;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.LinearLayoutManager;
-
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.chaterchat.Adapters.UserAdapter;
 import com.example.chaterchat.Model.Users;
@@ -22,6 +23,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
     ActivityMainBinding binding;
@@ -45,25 +47,31 @@ public class MainActivity extends AppCompatActivity {
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         binding.charRecyclerView.setLayoutManager(linearLayoutManager);
-
+        ProgressDialog dialog = new ProgressDialog(MainActivity.this);
+        dialog.setTitle("message");
+        dialog.setMessage("Loading...");
+        dialog.show();
         database.getReference().child("Users").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 list.clear();
                 for(DataSnapshot dataSnapshot : snapshot.getChildren()){
                     Users users = dataSnapshot.getValue(Users.class);
-                    users.setUserId(dataSnapshot.getKey());
+                    Objects.requireNonNull(users).setUserId(dataSnapshot.getKey());
                     if(!users.getUserId().equals(FirebaseAuth.getInstance().getUid())){
                         list.add(users);
+                        adapter.notifyDataSetChanged();
                     }
                 }
-                adapter.notifyDataSetChanged();
+                dialog.dismiss();
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
         });
+
+        adapter.notifyDataSetChanged();
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

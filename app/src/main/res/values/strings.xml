@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Chater Chat</string>
+    <string name="user_name">User Name</string>
+    <string name="loading">Loading..</string>
 </resources>

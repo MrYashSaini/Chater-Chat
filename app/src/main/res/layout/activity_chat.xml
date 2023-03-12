@@ -4,15 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ChartDetailActvity">
+    tools:context=".ChatDetailActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="0dp"
         android:background="@color/toolbar_color"
-        android:minHeight="?attr/actionBarSize"
 
+        android:foregroundTint="@color/white"
+        android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -26,8 +29,8 @@
                 android:src="@drawable/left_arrow"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:tint="#FFFFFF"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="#FFFFFF" />
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/profile_image"
@@ -49,9 +52,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:text="Yash"
+                android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/profile_image"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -67,29 +70,29 @@
             <!--                app:layout_constraintTop_toTopOf="parent"-->
             <!--                app:srcCompat="@drawable/menu" />-->
 
-<!--            <ImageView-->
-<!--                android:id="@+id/imageView4"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginEnd="7dp"-->
-<!--                app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintTop_toTopOf="parent"-->
-<!--                app:srcCompat="@drawable/video_camra_icon"-->
-<!--                app:tint="#FFFFFF"-->
-<!--                />-->
+            <!--            <ImageView-->
+            <!--                android:id="@+id/imageView4"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginEnd="7dp"-->
+            <!--                app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--                app:layout_constraintEnd_toEndOf="parent"-->
+            <!--                app:layout_constraintTop_toTopOf="parent"-->
+            <!--                app:srcCompat="@drawable/video_camra_icon"-->
+            <!--                app:tint="#FFFFFF"-->
+            <!--                />-->
 
-<!--            <ImageView-->
-<!--                android:id="@+id/imageView5"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginEnd="15dp"-->
-<!--                app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                app:layout_constraintEnd_toStartOf="@+id/imageView4"-->
-<!--                app:layout_constraintTop_toTopOf="parent"-->
-<!--                app:srcCompat="@drawable/call_icon"-->
-<!--                app:tint="#FFFFFF"-->
-<!--                />-->
+            <!--            <ImageView-->
+            <!--                android:id="@+id/imageView5"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginEnd="15dp"-->
+            <!--                app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--                app:layout_constraintEnd_toStartOf="@+id/imageView4"-->
+            <!--                app:layout_constraintTop_toTopOf="parent"-->
+            <!--                app:srcCompat="@drawable/call_icon"-->
+            <!--                app:tint="#FFFFFF"-->
+            <!--                />-->
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.appcompat.widget.Toolbar>
@@ -109,18 +112,30 @@
         android:layout_alignParentBottom="true"
         android:orientation="horizontal"
         android:background="@color/browser_actions_bg_grey">
+
         <EditText
             android:id="@+id/messagebox"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:layout_marginLeft="20dp"
-            android:padding="10dp"
             android:layout_marginBottom="5dp"
             android:layout_weight="1"
+            android:background="@drawable/msg_bg"
             android:ems="10"
-            android:inputType="textPersonName"
             android:hint="Type a message"
-            android:background="@drawable/msg_bg"/>
+            android:inputType="textPersonName"
+            android:padding="10dp" />
+
+        <ImageView
+            android:id="@+id/ivChatFileUpload"
+            android:layout_width="40dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="2dp"
+            android:layout_marginBottom="5dp"
+            app:tint="#626262"
+            app:srcCompat="@drawable/fileupload" />
+
         <ImageView
             android:id="@+id/sendbtn"
             android:layout_width="45dp"
